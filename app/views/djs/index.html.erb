@@ -1,14 +1,15 @@
 <ul>
-
-<% @djs.each do |dj|%>
-<li>
-<%= dj.name%>
-<%= dj.genre%>
-<%= dj.rate%>
-<%= dj.description%>
-<%= dj.photo%>
-
-</li>
-<% end %>
-
+  <% @djs.each do |dj| %>
+    <li>
+      <%= link_to dj.name, dj_path(dj) %>
+      <%= dj.genre.category %>
+      <%= dj.rate %>
+      <%= dj.description %>
+      <% if dj.photo.attached? %>
+        <%= image_tag dj.photo, class: 'dj-photo' %>
+      <% else %>
+        <p>No photo available.</p>
+      <% end %>
+    </li>
+  <% end %>
 </ul>

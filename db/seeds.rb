@@ -6,6 +6,12 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
+def random_dj_photo_path
+  photos_folder = Rails.root.join('app', 'assets', 'images', 'sampleDjImages')
+  photo_files = Dir.glob("#{photos_folder}/*.{jpg,jpeg}") # Adjust the extensions if needed
+  photo_files.sample
+end
+
 
 #users
 5.times do |i|
@@ -14,26 +20,20 @@
   email = "user#{i + 1}@example.com"
   password = "password#{i + 1}"
   User.create!({
-   first_name: first_name,
-   last_name: last_name,
-   email: email,
-   password: password
+    first_name: first_name,
+    last_name: last_name,
+    email: email,
+    password: password
   })
+end
 
-  end
-
-
- #adminlogin
- User.create!({
+#adminlogin
+User.create!({
   first_name: "Admin",
   last_name: "User",
   email: "admin@example.com",
   password: "123456"
- })
-
-
-
-
+})
 
 # Create genres
 genres = [
@@ -96,30 +96,33 @@ genres.each do |category|
   Genre.create!(category: category)
 end
 
-
-
-
-#Create DJ
+# Create DJ
 5.times do
   rate = rand(3..5)
   description = "Sample DJ description."
   genre_id = rand(1..5)
   user_id = rand(1..5)
   name = "Sample DJ #{rand(100)}"
-  photo = "sample_photo.jpg"
+  photo_path = random_dj_photo_path
+
+  photo_blob = ActiveStorage::Blob.create_and_upload!(
+    io: File.open(photo_path),
+    filename: File.basename(photo_path),
+    content_type: "image/jpeg"
+  )
 
   Dj.create!(
-  rate: rate,
-  description: description,
-  genre_id: genre_id,
-  user_id: user_id,
-  name: name,
-  photo: photo
+    rate: rate,
+    description: description,
+    genre_id: genre_id,
+    user_id: user_id,
+    name: name,
+    photo: photo_blob # Using File.open to set the image attachment
   )
-  end
+end
 
-  # Create bookings
-  5.times do
+# Create bookings
+5.times do
   start_date = Date.today + rand(1..30).days
   end_date = start_date + rand(1..5).days
   total_price = rand(50.0..300.0)
@@ -127,10 +130,10 @@ end
   user_id = rand(1..5)
 
   Booking.create!(
-  start_date: start_date,
-  end_date: end_date,
-  total_price: total_price,
-  dj_id: dj_id,
-  user_id: user_id
+    start_date: start_date,
+    end_date: end_date,
+    total_price: total_price,
+    dj_id: dj_id,
+    user_id: user_id
   )
 end

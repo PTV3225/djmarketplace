@@ -6,4 +6,6 @@ class Dj < ApplicationRecord
   validates :rate, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :description, presence: true, length: { maximum: 500 }
   validates :name, uniqueness: true
+
+  has_one_attached :photo
 end
