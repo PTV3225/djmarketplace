@@ -1,4 +1,15 @@
- <div class="cards-container">
+
+<!-- app/views/djs/index.html.erb -->
+
+<%= content_for :banner %>
+<div style="background-image: url('<%= asset_path('sampleDjImages/banner.jpg') %>'); background-size: cover; background-repeat: no-repeat; height: 300px;">
+  <!-- Banner content, if any -->
+
+  <h1 class="text-center"> Pimp My Dj </h1>
+</div>
+
+
+<div class="cards-container">
   <div class="card" style="width: 26rem;">
 
 
@@ -17,3 +28,5 @@
       </div>
   <% end %>
 </div>
+
+
