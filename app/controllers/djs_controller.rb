@@ -51,7 +51,7 @@ def destroy
   @dj = Dj.find(params[:id])
 
   if @dj.destroy
-    redirect_to root_path, notice: "DJ Listing deleted successfully."
+    redirect_to djs_path, notice: "DJ Listing deleted successfully."
   else
     redirect_to dj_path(@dj), alert: "Failed to delete DJ Listing."
   end

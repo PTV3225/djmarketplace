@@ -1,0 +1,39 @@
+<!-- app/views/djs/_edit_form.html.erb -->
+
+<%= simple_form_for @dj, html: { multipart: true } do |f| %>
+  <%= f.input :name, placeholder: 'David Guetta' %>
+  <%= f.collection_select :genre_id, Genre.all, :id, :category, { prompt: 'Select a Genre' }, { class: 'form-control' } %>
+  <%= f.input :rate, placeholder: '50' %>
+  <%= f.input :description, placeholder: 'Hi I am a melb based DJ looking for house gigs......' %>
+
+  <% if dj.photo.attached? %>
+    <div class="form-group">
+      <%= image_tag dj.photo, class: 'dj-photo' %>
+    </div>
+    <div class="form-group">
+      <%= f.label :remove_photo, class: 'form-check-label' do %>
+        <%= f.check_box :remove_photo %>
+        Remove existing photo
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.file_field :photo %> <!-- Add the file upload field for the photo -->
+  </div>
+
+  <div class="actions">
+    <%= f.submit 'Update DJ', class: 'btn btn-primary' %>
+    <%= link_to 'Cancel', '#', class: 'btn btn-secondary cancel-edit' %>
+  </div>
+<% end %>
+
+<script>
+  const cancelEditButton = document.querySelector(".cancel-edit");
+
+  cancelEditButton.addEventListener("click", function(event) {
+    event.preventDefault();
+    document.querySelector("#edit-dj-form").style.display = "none";
+    document.querySelector(".dj-details").style.display = "block";
+  });
+</script>

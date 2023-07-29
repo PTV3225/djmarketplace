@@ -10,3 +10,9 @@
 <% end %>
 
 <%= link_to 'Back', djs_path, class: 'btn btn-primary' %>
+
+<%= link_to 'Edit', edit_dj_path(@dj), class: 'btn btn-secondary' %>
+
+ <%= link_to dj_path(@dj), data: {turbo_method: :delete, turbo_confirm: "Delete #{@dj.name}?"},class: 'btn btn-danger'  do %>
+
+<% end %>
