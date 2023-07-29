@@ -1,8 +1,9 @@
 <h3>PIMP YO DJ</h3>
-        <%= simple_form_for @dj do |f| %>
-          <%= f.input :name, placeholder: 'DJ Varley' %>
-          <%= f.collection_select :genre_id, Genre.all, :id, :category, { prompt: 'Select a Genre' }, { class: 'form-control' } %>
-           <%= f.input :rate, placeholder: '50' %>
-          <%= f.input :description, placeholder: 'hi i am a retired wedding dj' %>
-           <%= f.submit class: 'btn btn-flat' %>
-        <% end %>
+<%= simple_form_for @dj, html: { multipart: true } do |f| %>
+  <%= f.input :name, placeholder: 'David Guetta' %>
+  <%= f.collection_select :genre_id, Genre.all, :id, :category, { prompt: 'Select a Genre' }, { class: 'form-control' } %>
+  <%= f.input :rate, placeholder: '50' %>
+  <%= f.input :description, placeholder: 'Hi I am a melb based DJ looking for house gigs......' %>
+  <%= f.file_field :photo %> <!-- Add the file upload field for the photo -->
+  <%= f.submit class: 'btn btn-flat' %>
+<% end %>
