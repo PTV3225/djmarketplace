@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   # Add the DJ controller routes excluding the index action
   resources :djs
 
+  resources :bookings
+
   # Defines the root path route ("/")
   # root "articles#index"
 end
