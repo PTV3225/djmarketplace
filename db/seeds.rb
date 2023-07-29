@@ -7,6 +7,34 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 
+#users
+5.times do |i|
+  first_name = "User#{i + 1}"
+  last_name = "Lastname#{i + 1}"
+  email = "user#{i + 1}@example.com"
+  password = "password#{i + 1}"
+  User.create!({
+   first_name: first_name,
+   last_name: last_name,
+   email: email,
+   password: password
+  })
+
+  end
+
+
+ #adminlogin
+ User.create!({
+  first_name: "Admin",
+  last_name: "User",
+  email: "admin@example.com",
+  password: "123456"
+ })
+
+
+
+
+
 # Create genres
 genres = [
   "House",
