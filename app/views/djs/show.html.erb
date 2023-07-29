@@ -1,1 +1,12 @@
-<%= @dj.name%>
+<h3><%= @dj.name %></h3>
+<p>Genre: <%= @dj.genre.category %></p>
+<p>Rate: <%= @dj.rate %></p>
+<p>Description: <%= @dj.description %></p>
+
+<% if @dj.photo.attached? %>
+  <%= image_tag @dj.photo, class: 'dj-photo' %>
+<% else %>
+  <p>No photo available.</p>
+<% end %>
+
+<%= link_to 'Back', djs_path, class: 'btn btn-primary' %>
