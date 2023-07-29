@@ -1,15 +1,19 @@
+ <div class="cards-container">
+  <div class="card" style="width: 26rem;">
+
 
   <% @djs.each do |dj| %>
-    <li>
-      <%= link_to dj.name, dj_path(dj) %>
-      <%= dj.genre.category %>
-      <%= dj.rate %>
-      <%= dj.description %>
-      <% if dj.photo.attached? %>
-        <%= image_tag dj.photo, class: 'dj-photo' %>
-      <% else %>
-        <p>No photo available.</p>
-      <% end %>
-    </li>
+    <% if dj.photo.attached? %>
+      <%= image_tag dj.photo, class: 'card-img-top' %>
+    <% else %>
+      <p>No photo available.</p>
+    <% end %>
+     <div class="card-body">
+        <h5 class="card-title"><%= dj.name %></h5>
+        <p class="card-text"><%= "Genre: #{dj.genre.category}" %></p>
+        <p class="card-text"><%= "Rate: $#{dj.rate} per hour"%></p>
+        <p class="card-text"><%= "Description: #{dj.description}" %></p>
+        <a href="<%= dj_path(dj) %>" class="btn btn-primary">Check out more</a>
+      </div>
   <% end %>
-
+</div>

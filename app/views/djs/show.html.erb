@@ -1,6 +1,6 @@
 <h3><%= @dj.name %></h3>
 <p>Genre: <%= @dj.genre.category %></p>
-<p>Rate: <%= @dj.rate %></p>
+<p>Rate: <%= "$#{@dj.rate} per hour" %></p>
 <p>Description: <%= @dj.description %></p>
 
 <% if @dj.photo.attached? %>
