@@ -10,14 +10,17 @@ class BookingsController < ApplicationController
   end
 
   def new
+    @dj = Dj.find(params[:dj_id])
     @booking = Booking.new
   end
 
   def create
     @booking = Booking.new(booking_params)
+    @dj = Dj.find(params[:dj_id])
+    @booking.dj = @dj
 
     if @booking.save
-      redirect_to @booking, notice: 'Booking was successfully created.'
+      redirect_to @booking, notice: "Booking was successfully created."
     else
       render :new, status: :unprocessable_entity
     end

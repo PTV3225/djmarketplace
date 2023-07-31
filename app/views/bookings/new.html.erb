@@ -1,0 +1,12 @@
+<h3>Make a Booking for <%= @dj.name %></h3>
+<%= simple_form_for [@dj, @booking], html: { id: "booking-form" } do |f| %>
+  <%= f.hidden_field :dj_id, value: @dj.id %>
+  <%= f.label :start_date %>
+  <%= f.date_field :start_date, class: "start-date-input" %>
+
+  <%= f.label :end_date %>
+  <%= f.date_field :end_date, class: "end-date-input" %>
+
+  <%= f.input :total_price, placeholder: "Enter the total price", input_html: { readonly: true }, wrapper_html: { class: "total-price-wrapper" } %>
+  <%= f.submit class: "btn btn-flat" %>
+<% end %>

@@ -49,6 +49,8 @@ gem "sassc-rails"
 # gem "image_processing", "~> 1.2"
 
 
+#shiv added to handle date picking
+gem 'flatpickr-rails'
 
 
 
