@@ -9,4 +9,17 @@ class Dj < ApplicationRecord
   validates :name, uniqueness: true
 
   has_one_attached :photo
+
+  validates :link, format: { with: /\Ahttps:\/\/soundcloud\.com\/.*\z/, message: "should be a SoundCloud link" }
+
+
+  private
+
+  def extract_soundcloud_track_id
+    if link.present? && link.include?("soundcloud.com")
+      self.link = link.split("/").last # Extract the track ID from the link
+    end
+  end
+
+
 end
