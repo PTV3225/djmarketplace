@@ -1,0 +1,16 @@
+<h2>Your DJs for Rent</h2>
+<% @djs.each do |dj| %>
+  <p><%= dj.name %></p>
+  <!-- Add more details about the DJ as needed -->
+<% end %>
+
+<h2>Pending Booking Requests</h2>
+<% @pending_bookings.each do |booking| %>
+  <p>
+    DJ: <%= booking.dj.name %><br>
+    Start Time: <%= booking.start_time %><br>
+    End Time: <%= booking.end_time %><br>
+    Total Price: <%= booking.total_price %><br>
+    <!-- Add more details about the booking as needed -->
+  </p>
+<% end %>

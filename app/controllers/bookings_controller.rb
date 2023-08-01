@@ -50,9 +50,29 @@ class BookingsController < ApplicationController
     end
   end
 
-  private
 
+
+
+  def approve
+    booking = Booking.find(params[:id])
+    # Update the booking status to approved
+    booking.update(status: 'approved')
+    # Redirect back to the dashboard or show a success message
+    redirect_to dashboard_path, notice: 'Booking approved successfully.'
+  end
+
+  def reject
+    booking = Booking.find(params[:id])
+    # Update the booking status to rejected
+    booking.update(status: 'rejected')
+    # Redirect back to the dashboard or show a success message
+    redirect_to dashboard_path, notice: 'Booking rejected successfully.'
+  end
+
+
+
+  private
   def booking_params
-    params.require(:booking).permit(:dj_id, :user_id, :start_time, :end_time, :total_price)
+    params.require(:booking).permit(:dj_id, :user_id, :start_time, :end_time, :date)
   end
 end
