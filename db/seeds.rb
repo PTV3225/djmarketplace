@@ -97,13 +97,31 @@ genres.each do |category|
 end
 
 # Create DJ
-5.times do
+soundcloud_links = [
+  "https://soundcloud.com/the-captain/galactic-funk-instru-mix?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing",
+  "https://soundcloud.com/kid-koala/02-1000-towns-feat-coelacanth?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing",
+  "https://soundcloud.com/djshadow/bbc-6music-segment-4?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing",
+  "https://soundcloud.com/strictly/kaleidoscope-companion-mixed?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing",
+  "https://soundcloud.com/four-tet/kh-essential-mix-2022?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+]
+
+melbourne_suburbs = [
+  "Richmond",
+  "Fitzroy",
+  "Brunswick",
+  "South Yarra",
+  "St Kilda"
+]
+
+5.times do |index|
   rate = rand(3..5)
-  description = "Sample DJ description."
+  description =  Faker::Lorem.paragraph_by_chars(number: 500, supplemental: false)
   genre_id = rand(1..5)
   user_id = rand(1..5)
-  name = "Sample DJ #{rand(100)}"
+  name = "DJ #{Faker::Name.unique.first_name[0...20]}"
   photo_path = random_dj_photo_path
+  soundcloud_link = soundcloud_links[index]
+  suburb = melbourne_suburbs[index]
 
   photo_blob = ActiveStorage::Blob.create_and_upload!(
     io: File.open(photo_path),
@@ -117,23 +135,29 @@ end
     genre_id: genre_id,
     user_id: user_id,
     name: name,
-    photo: photo_blob # Using File.open to set the image attachment
+    photo: photo_blob,
+    link: soundcloud_link,
+    location: suburb
   )
 end
 
-# Create bookings
-5.times do
-  start_date = Date.today + rand(1..30).days
-  end_date = start_date + rand(1..5).days
-  total_price = rand(50.0..300.0)
-  dj_id = rand(1..5)
-  user_id = rand(1..5)
 
-  Booking.create!(
-    start_date: start_date,
-    end_date: end_date,
-    total_price: total_price,
-    dj_id: dj_id,
-    user_id: user_id
-  )
-end
+# # Create bookings
+# 5.times do
+#   start_date = Date.today + rand(1..30).days
+#   total_price = rand(50.0..300.0)
+#   dj_id = rand(1..5)
+#   user_id = rand(1..5)
+#   start_time = Time.now + rand(1..6).hours
+#   end_time = start_time + rand(1..5).hours
+
+#   Booking.create!(
+#     start_date: start_date,
+#     total_price: total_price,
+#     dj_id: dj_id,
+#     user_id: user_id,
+#     start_time: start_time,
+#     end_time: end_time,
+#     date: start_date
+#   )
+# end
