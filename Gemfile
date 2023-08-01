@@ -49,6 +49,8 @@ gem "sassc-rails"
 # gem "image_processing", "~> 1.2"
 
 
+#Peter added for seed file
+gem "faker"
 
 
 
