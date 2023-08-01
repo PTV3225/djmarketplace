@@ -59,12 +59,16 @@ end
 
 
 
+
+
+
+
 #
 
 private
 
   def dj_params
-    params.require(:dj).permit(:name, :genre_id, :rate, :description, :photo)
+    params.require(:dj).permit(:name, :genre_id, :rate, :description, :photo, :link)
   end
 
 
