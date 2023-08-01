@@ -117,23 +117,28 @@ end
     genre_id: genre_id,
     user_id: user_id,
     name: name,
-    photo: photo_blob # Using File.open to set the image attachment
+    photo: photo_blob, # Using File.open to set the image attachment
+    link: 'https://soundcloud.com/sampledjlink'
   )
 end
 
 # Create bookings
 5.times do
-  start_date = Date.today + rand(1..30).days
-  end_date = start_date + rand(1..5).days
-  total_price = rand(50.0..300.0)
-  dj_id = rand(1..5)
-  user_id = rand(1..5)
+  start_time = Time.now + rand(1..30).days
+  end_time = start_time + rand(1..5).hours
+  date = start_time.to_date
+  dj = Dj.all.sample
+
+  # Calculate total_price based on the rate of the DJ and the duration of the booking
+  hours_duration = (end_time - start_time) / 1.hour
+  total_price = dj.rate * hours_duration
 
   Booking.create!(
-    start_date: start_date,
-    end_date: end_date,
+    start_time: start_time,
+    end_time: end_time,
+    date: date,
     total_price: total_price,
-    dj_id: dj_id,
-    user_id: user_id
+    dj_id: dj.id,
+    user_id: User.all.sample.id
   )
 end
