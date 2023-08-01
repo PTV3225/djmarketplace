@@ -48,9 +48,8 @@ gem "sassc-rails"
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
-
-#shiv added to handle date picking
-# gem 'flatpickr-rails'
+#Peter added for seed file
+gem "faker"
 
 gem "pg_search"
 

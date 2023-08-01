@@ -61,6 +61,13 @@ def destroy
 end
 
 
+def dashboard
+  @user = current_user
+  @djs = @user.djs
+  @pending_bookings = @user.pending_bookings.includes(:dj)
+end
+
+
 
 
 
