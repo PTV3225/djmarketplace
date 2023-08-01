@@ -50,11 +50,9 @@ gem "sassc-rails"
 
 
 #shiv added to handle date picking
-gem 'flatpickr-rails'
+# gem 'flatpickr-rails'
 
-
-
-
+gem "pg_search"
 
 gem "autoprefixer-rails"
 gem "font-awesome-sass", "~> 6.1"
