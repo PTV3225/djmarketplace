@@ -5,8 +5,8 @@
     <p>End Time: <%= booking.end_time.strftime("%H:%M") %></p>
     <p>Total Price: <%= booking.total_price %></p>
     <p>Status: <%= booking.status %></p>
-    <%= link_to "Approve", approve_booking_path(booking), method: :post, class: "approve-btn" %>
-    <%= link_to "Reject", reject_booking_path(booking), method: :post, class: "reject-btn" %>
+    <%= link_to "Approve", approve_booking_path(booking), method: :post, class: "btn btn-primary" %>
+    <%= link_to "Reject", reject_booking_path(booking), method: :post, class: "btn btn-primary" %>
   </div>
 </div>
 
