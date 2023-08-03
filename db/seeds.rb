@@ -114,10 +114,10 @@ melbourne_suburbs = [
 ]
 
 5.times do |index|
-  rate = rand(3..5)
-  description =  Faker::Lorem.paragraph_by_chars(number: 500, supplemental: false)
-  genre_id = rand(1..5)
-  user_id = rand(1..5)
+  rate = rand(50..200)
+  description = Faker::Lorem.paragraph_by_chars(number: 500, supplemental: false)
+  genre_id = Genre.all.sample.id
+  user_id = User.all.sample.id
   name = "DJ #{Faker::Name.unique.first_name[0...20]}"
   photo_path = random_dj_photo_path
   soundcloud_link = soundcloud_links[index]
@@ -143,13 +143,14 @@ end
 
 # Create bookings
 5.times do
-  start_time = Time.now + rand(1..30).days
+  start_time = DateTime.now + rand(1..30).days
   end_time = start_time + rand(1..5).hours
   date = start_time.to_date
   dj = Dj.all.sample
 
   # Calculate total_price based on the rate of the DJ and the duration of the booking
-  hours_duration = (end_time - start_time) / 1.hour
+  hours_duration = (end_time - start_time).to_f / 1.hour
+  # / 1.hour
   total_price = dj.rate * hours_duration
 
   Booking.create!(
@@ -161,4 +162,3 @@ end
     user_id: User.all.sample.id
   )
 end
-
