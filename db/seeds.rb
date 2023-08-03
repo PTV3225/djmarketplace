@@ -145,6 +145,9 @@ end
 5.times do
   start_time = Time.now + rand(1..30).days
   end_time = start_time + rand(1..5).hours
+  if end_time <= start_time
+    end_time = start_time + rand(1..5).hours
+  end
   date = start_time.to_date
   dj = Dj.all.sample
 
@@ -161,4 +164,3 @@ end
     user_id: User.all.sample.id
   )
 end
-

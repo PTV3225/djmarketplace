@@ -2,7 +2,7 @@
 <p>Genre: <%= @dj.genre.category %></p>
 <p>Rate: <%= "$#{@dj.rate} per hour" %></p>
 <p>Description: <%= @dj.description %></p>
-<p>Location: <%= {dj.location} %></p>
+<p>Location: <%= @dj.location %></p>
 
 <% if @dj.photo.attached? %>
   <%= image_tag @dj.photo, class: 'dj-photo' %>
