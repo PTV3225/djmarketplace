@@ -12,6 +12,16 @@ class Dj < ApplicationRecord
 
   validates :link, format: { with: /\Ahttps:\/\/soundcloud\.com\/.*\z/, message: "should be a SoundCloud link" }
 
+  #PG SEARCH implementation
+  include PgSearch::Model
+  pg_search_scope :global_search,
+    against: [:name],
+    associated_against: {
+      genre: [:category]
+    },
+    using: {
+      tsearch: { prefix: true }
+    }
 
   private
 
@@ -20,6 +30,4 @@ class Dj < ApplicationRecord
       self.link = link.split("/").last # Extract the track ID from the link
     end
   end
-
-
 end

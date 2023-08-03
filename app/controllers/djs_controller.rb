@@ -1,9 +1,12 @@
 class DjsController < ApplicationController
 
   def index
-
-    @djs = Dj.all
-
+    #PG SEARCH implementation
+    if params[:query].present?
+      @djs = Dj.global_search(params[:query])
+    else
+      @djs = Dj.all
+    end
   end
 
   def new
