@@ -1,10 +1,31 @@
-<h3>PIMP YO DJ</h3>
-<%= simple_form_for @dj, html: { multipart: true } do |f| %>
-  <%= f.input :name, placeholder: 'David Guetta' %>
-  <%= f.collection_select :genre_id, Genre.all, :id, :category, { prompt: 'Select a Genre' }, { class: 'form-control' } %>
-  <%= f.input :rate, placeholder: '50' %>
-  <%= f.input :description, placeholder: 'Hi I am a melb based DJ looking for house gigs......' %>
-  <%= f.file_field :photo %> <!-- Add the file upload field for the photo -->
-   <%= f.input :link, placeholder: 'https://soundcloud.com/davidguetta' %>
-  <%= f.submit class: 'btn btn-flat' %>
-<% end %>
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <h3 class="mb-4">Add a DJ to the mix</h3>
+      <%= simple_form_for @dj, html: { multipart: true } do |f| %>
+        <div class="mb-3">
+          <%= f.input :name, label: 'Name', placeholder: 'David Guetta', class: 'form-control' %>
+        </div>
+        <div class="mb-3">
+          <%= f.collection_select :genre_id, Genre.all, :id, :category, { prompt: 'Select a Genre' }, { class: 'form-control' } %>
+        </div>
+        <div class="mb-3">
+          <%= f.input :rate, label: 'Rate (per hour)', placeholder: '50', class: 'form-control' %>
+        </div>
+        <div class="mb-3">
+          <%= f.input :location, label: 'Location', placeholder: 'Maribyrnong', class: 'form-control' %>
+        </div>
+        <div class="mb-3">
+          <%= f.input :description, label: 'Description', placeholder: 'Hi, I am a Melbourne-based DJ looking for house gigs...', class: 'form-control' %>
+        </div>
+        <div class="mb-3">
+          <%= f.file_field :photo, label: 'Photo', class: 'form-control' %>
+        </div>
+        <div class="mb-3">
+          <%= f.input :link, label: 'SoundCloud Link', placeholder: 'https://soundcloud.com/davidguetta', class: 'form-control' %>
+        </div>
+        <%= f.submit 'Submit', class: 'btn btn-primary' %>
+      <% end %>
+    </div>
+  </div>
+</div>
