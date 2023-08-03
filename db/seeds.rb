@@ -5,6 +5,14 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+puts "clearing database"
+
+Booking.destroy_all
+Dj.destroy_all
+Genre.destroy_all
+User.destroy_all
+
+puts "creating database"
 
 def random_dj_photo_path
   photos_folder = Rails.root.join('app', 'assets', 'images', 'sampleDjImages')
@@ -126,7 +134,7 @@ melbourne_suburbs = [
   photo_blob = ActiveStorage::Blob.create_and_upload!(
     io: File.open(photo_path),
     filename: File.basename(photo_path),
-    content_type: "image/jpeg"
+    content_type: "image/jpg"
   )
 
   Dj.create!(
