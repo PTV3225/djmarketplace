@@ -53,7 +53,7 @@ gem "sassc-rails"
 gem "faker"
 
 
-
+gem 'flatpickr'
 
 
 
