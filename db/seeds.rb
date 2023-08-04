@@ -160,9 +160,13 @@ end
   dj = Dj.all.sample
 
   # Calculate total_price based on the rate of the DJ and the duration of the booking
-  hours_duration = (end_time - start_time).to_f / 1.hour
+  hours_duration = (end_time.to_time - start_time.to_time)/ 1.hours
   # / 1.hour
+
+
+
   total_price = dj.rate * hours_duration
+puts total_price
 
   Booking.create!(
     start_time: start_time,

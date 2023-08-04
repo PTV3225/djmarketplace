@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   # Define the route for the dashboard
   get '/dashboard', to: 'dashboard#show', as: :dashboard
 
+
   post '/approve_booking/:id', to: 'bookings#approve', as: :approve_booking
 post '/reject_booking/:id', to: 'bookings#reject', as: :reject_booking
 

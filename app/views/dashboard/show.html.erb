@@ -1,16 +1,33 @@
 <h2>Your DJs for Rent</h2>
 <% @djs.each do |dj| %>
   <p><%= dj.name %></p>
-  <!-- Add more details about the DJ as needed -->
+  <p>Name: <%= dj.name %></p>
+  <p>Rate: <%= dj.rate %></p>
+
+  <h2>Your Bookings:</h2>
+  <% dj_bookings = @outgoing_bookings.select { |booking| booking.dj_id == dj.id } %>
+  <% if dj_bookings.present? %>
+    <!-- Display bookings made by the DJ -->
+    <% dj_bookings.each do |booking| %>
+      <%= render "bookings/booking_request", booking: booking %>
+    <% end %>
+  <% else %>
+    <p>No bookings made by this DJ.</p>
+  <% end %>
+
+  <% dj_incoming_bookings = @incoming_bookings.select { |booking| booking.dj_id == dj.id } %>
+  <% if dj_incoming_bookings.present? %>
+    <h2>Your Incoming Bookings:</h2>
+    <!-- Display bookings made to the DJ -->
+    <% dj_incoming_bookings.each do |booking| %>
+      <%= render "bookings/booking_request", booking: booking %>
+    <% end %>
+  <% else %>
+    <p>No incoming bookings for this DJ.</p>
+  <% end %>
+
 <% end %>
 
-<h2>Pending Booking Requests</h2>
-<% @pending_bookings.each do |booking| %>
-  <p>
-    DJ: <%= booking.dj.name %><br>
-    Start Time: <%= booking.start_time %><br>
-    End Time: <%= booking.end_time %><br>
-    Total Price: <%= booking.total_price %><br>
-    <!-- Add more details about the booking as needed -->
-  </p>
+<% if @djs.empty? %>
+  <p>No DJ associated with the user.</p>
 <% end %>

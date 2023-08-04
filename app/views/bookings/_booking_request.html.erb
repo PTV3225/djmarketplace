@@ -1,0 +1,12 @@
+<!-- Card layout for booking request details -->
+<div class="card">
+  <div class="card-body">
+    <p>Date: <%= booking.date %></p>
+    <p>Start Time: <%= booking.start_time.strftime("%H:%M") %></p>
+    <p>End Time: <%= booking.end_time.strftime("%H:%M") %></p>
+    <p>Total Price: <%= booking.total_price %></p>
+    <p>Status: <%= booking.status %></p>
+    <%= link_to "Approve", approve_booking_path(booking), method: :post %>
+    <%= link_to "Reject", reject_booking_path(booking), method: :post %>
+  </div>
+</div>
