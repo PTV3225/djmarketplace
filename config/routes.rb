@@ -12,8 +12,8 @@ Rails.application.routes.draw do
   get '/dashboard', to: 'dashboard#show', as: :dashboard
 
 
-  post '/approve_booking/:id', to: 'bookings#approve', as: :approve_booking
-post '/reject_booking/:id', to: 'bookings#reject', as: :reject_booking
+  get '/approve_booking/:id', to: 'bookings#approve', as: :approve_booking
+get '/reject_booking/:id', to: 'bookings#reject', as: :reject_booking
 
   # Defines the root path route ("/")
   # root "articles#index"

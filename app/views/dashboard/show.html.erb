@@ -1,33 +1,82 @@
-<h2>Your DJs for Rent</h2>
-<% @djs.each do |dj| %>
-  <p><%= dj.name %></p>
-  <p>Name: <%= dj.name %></p>
-  <p>Rate: <%= dj.rate %></p>
+<style>
+  /* Add this CSS to your stylesheet or in the <head> section of your HTML file */
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+  }
 
-  <h2>Your Bookings:</h2>
-  <% dj_bookings = @outgoing_bookings.select { |booking| booking.dj_id == dj.id } %>
-  <% if dj_bookings.present? %>
-    <!-- Display bookings made by the DJ -->
-    <% dj_bookings.each do |booking| %>
-      <%= render "bookings/booking_request", booking: booking %>
-    <% end %>
-  <% else %>
-    <p>No bookings made by this DJ.</p>
-  <% end %>
+  .dj-container {
+    flex-basis: 50%;
+    padding: 10px;
+  }
+
+  .user-bookings {
+    flex-basis: 50%;
+    padding: 10px;
+  }
+
+  .card {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 5px;
+  }
+</style>
+
+<div class="container">
+  <div class="dj-container">
+  <h2>Your DJs for Rent</h2>
+  <% @djs.each do |dj| %>
+    <div class="card">
+      <div class="card-body">
+        <h3><%= dj.name %></h3>
+        <p>Genre: <%= dj.genre.category %></p>
+        <p>Rate (per hour): <%= "$#{dj.rate}" %></p>
+        <p>Description: <%= dj.description %></p>
+        <p>Location: <%= dj.location %></p>
+        <% if dj.link.present? %>
+          <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
+                  src="https://w.soundcloud.com/player/?url=<%= dj.link %>&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;show_teaser=true">
+          </iframe>
+        <% else %>
+          <p>No SoundCloud track available.</p>
+        <% end %>
+      </div>
 
   <% dj_incoming_bookings = @incoming_bookings.select { |booking| booking.dj_id == dj.id } %>
-  <% if dj_incoming_bookings.present? %>
-    <h2>Your Incoming Bookings:</h2>
-    <!-- Display bookings made to the DJ -->
-    <% dj_incoming_bookings.each do |booking| %>
+<% if dj_incoming_bookings.present? %>
+  <h4>Incoming Bookings for <%= dj.name %>:</h4>
+  <!-- Display bookings made to the DJ -->
+  <% dj_incoming_bookings.each do |booking| %>
+    <div class="card">
+      <p><%= booking.user.first_name %> <%= booking.user.last_name %> wants to book <%= dj.name %> for <%= number_to_currency(booking.total_price) %> on <%= booking.date.strftime('%Y-%m-%d') %> at <%= booking.start_time.strftime('%H:%M') %> until <%= booking.end_time.strftime('%H:%M') %></p>
       <%= render "bookings/booking_request", booking: booking %>
-    <% end %>
-  <% else %>
-    <p>No incoming bookings for this DJ.</p>
+    </div>
+  <% end %>
+<% else %>
+  <p>No incoming bookings for this DJ.</p>
+<% end %>
+
+    </div>
   <% end %>
 
-<% end %>
+  <% if @djs.empty? %>
+    <p>No DJs associated with the user.</p>
+  <% end %>
+</div>
 
-<% if @djs.empty? %>
-  <p>No DJ associated with the user.</p>
-<% end %>
+
+  <div class="user-bookings">
+    <h2>Your Bookings:</h2>
+    <% user_bookings = @outgoing_bookings.select { |booking| booking.user_id == current_user.id } %>
+    <% if user_bookings.present? %>
+      <!-- Display bookings made by the current_user -->
+      <% user_bookings.each do |booking| %>
+        <div class="card">
+          <%= render "bookings/booking", booking: booking %>
+        </div>
+      <% end %>
+    <% else %>
+      <p>No bookings made by you.</p>
+    <% end %>
+  </div>
+</div>
