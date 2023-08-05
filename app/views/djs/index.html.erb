@@ -2,18 +2,22 @@
 <!-- app/views/djs/index.html.erb -->
 
 <%= content_for :banner %>
-<div style="background-image: url('<%= asset_path('sampleDjImages/banner.jpg') %>'); background-size: cover; background-repeat: no-repeat; height: 300px; display: flex; align-items: flex-end; justify-content: center; background-position: center bottom 60%;">
-  <h1 class="text-center text-light display-4"> Pimp Yo DJ </h1>
+
+<div style="background-image: url('<%= asset_path('DJmarketplace_homepage.svg') %>'); background-size: 80%; background-repeat: no-repeat; background-position: left; height: 300px; display: flex; align-items: center; justify-content: flex-start; padding-left: 100px; color: #37382D;">
+  <div>
+    <h1 class="display-4">DJ matchr</h1>
+    <p style="font-size: 30px; margin-top: 5px;">Bringing local DJs and parties together</p>
+  </div>
 </div>
 
-<!-- PG SEARCH form -->
+
 <div class="row justify-content-center">
   <div class="col-sm-8 my-3">
     <%= form_with url: djs_path, method: :get, class: "d-flex" do %>
       <%= text_field_tag :query,
             params[:query],
             class: "form-control",
-            placeholder: "Type a keyword"
+            placeholder: "Search by name, genre, price or location"
         %>
       <%= submit_tag "Search", name: "", class: "btn btn-primary" %>
     <% end %>
@@ -32,14 +36,14 @@
           <% end %>
           <div class="card-body">
             <h5 class="card-title"><%= dj.name %></h5>
-            <p class="card-text"><%= "Genre: #{dj.genre.category}" %></p>
-            <p class="card-text"><%= "Rate (per hour): $#{dj.rate}"%></p>
+            <p class="card-text"><strong>Genre:</strong> <%= dj.genre.category %></p>
+            <p class="card-text"><strong>Rate (per hour):</strong> $<%= dj.rate %></p>
+            <p class="card-text"><strong>Location:</strong> <%= dj.location %></p>
             <% if dj.description.length > 100 %>
-              <p class="card-text"><%= "Description: #{dj.description[0..100]}..." %></p>
+              <p class="card-text"><%= "#{dj.description[0..100]}..." %></p>
             <% else %>
-              <p class="card-text"><%= "Description: #{dj.description}" %></p>
+              <p class="card-text"><%= "#{dj.description}" %></p>
             <% end %>
-            <p class="card-text"><%= "Location: #{dj.location}" %></p>
             <a href="<%= dj_path(dj) %>" class="btn btn-primary">Check out more</a>
           </div>
         </div>

@@ -11,10 +11,10 @@
       <div class="col-md-8">
         <div class="card-body">
           <h3><%= @dj.name %></h3>
-          <p>Genre: <%= @dj.genre.category %></p>
-          <p>Rate (per hour): <%= "$#{@dj.rate}" %></p>
-          <p>Description: <%= @dj.description %></p>
-          <p>Location: <%= @dj.location %></p>
+          <p><strong>Genre:</strong> <%= @dj.genre.category %></p>
+          <p><strong>Rate (per hour):</strong> <%= "$#{@dj.rate}" %></p>
+          <p><strong>Location:</strong> <%= @dj.location %></p>
+          <p><%= @dj.description %></p>
           <% if @dj.link.present? %>
             <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
                     src="https://w.soundcloud.com/player/?url=<%= @dj.link %>&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;show_teaser=true">
@@ -22,12 +22,14 @@
           <% else %>
             <p>No SoundCloud track available.</p>
           <% end %>
+          <%= link_to "Make a Booking", new_dj_booking_path(@dj), class: "btn btn-primary" %>
+          <p></p>
           <%= link_to 'Back', djs_path, class: 'btn btn-primary' %>
-          <%= link_to 'Edit', edit_dj_path(@dj), class: 'btn btn-secondary' %>
-          <%= link_to dj_path(@dj), data: {turbo_method: :delete, turbo_confirm: "Delete #{@dj.name}?"},class: 'btn btn-danger'  do %>
+          <%= link_to 'Edit', edit_dj_path(@dj), class: 'btn btn-primary' %>
+          <%= link_to dj_path(@dj), data: {turbo_method: :delete, turbo_confirm: "Delete #{@dj.name}?"},class: 'btn btn-primary'  do %>
             Delete
           <% end %>
-          <%= link_to "Make a Booking", new_dj_booking_path(@dj), class: "btn btn-primary" %>
+
         </div>
       </div>
     </div>
