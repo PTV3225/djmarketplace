@@ -9,8 +9,7 @@ class Booking < ApplicationRecord
   validate :date_cannot_be_in_the_past
 
 
-#shiv added for approval mechanis,
-  enum status: [:pending, :approved, :rejected]
+
 
 
   private

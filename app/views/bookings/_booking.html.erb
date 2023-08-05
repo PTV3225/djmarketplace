@@ -1,3 +1,100 @@
-<!-- Display booking details -->
-<p>You have requested <%= booking.dj.name %> on <%= booking.date.strftime("%B %d, %Y") %>
-at <%= booking.start_time.strftime("%H:%M %p") %> till <%= booking.end_time.strftime("%H:%M %p") %>.</p>
+<style>
+  /* Your existing CSS styles */
+
+  /* Additional CSS for booking details */
+  .dj-name {
+    font-weight: bold;
+  }
+
+  .booking-info {
+    font-weight: bold;
+  }
+
+  .card {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+  }
+
+  /* Styling for different booking statuses */
+  .pending-card {
+    background-color: #fdd68a; /* Light yellow */
+  }
+
+  .approved-card {
+    background-color: #a1ecd9; /* Light green */
+  }
+
+  .rejected-card {
+    background-color: #f7b9bb; /* Light red */
+  }
+
+  /* Styling for hyperlinks */
+  a {
+    color: #007bff; /* Blue color, you can change it to your preferred color */
+    text-decoration: none; /* Remove underline */
+  }
+
+  a:hover {
+    color: #0056b3; /* Darker blue color when hovered */
+  }
+
+  /* New CSS for schedule layout */
+  .schedule-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .schedule-item {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* Style for buttons inside schedule items */
+  .approve-btn,
+  .reject-btn {
+    padding: 5px 10px;
+    background-color: #007bff; /* Blue color, you can change it to your preferred color */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .reject-btn {
+    background-color: #007bff; /* Blue color, you can change it to your preferred color */
+    margin-left: 10px;
+  }
+
+  /* Style for buttons on hover */
+  .approve-btn:hover,
+  .reject-btn:hover {
+    opacity: 0.8;
+  }
+
+</style>
+
+<!-- The rest of your HTML remains unchanged -->
+
+<div class="schedule-container">
+  <% if booking.status == "pending" %>
+    <div class="card pending-card schedule-item">
+      <p class="dj-name"><%= link_to booking.dj.name, "/djs/#{booking.dj.id}" %></p>
+      <p class="booking-info">You have requested on <%= booking.date.strftime("%B %d, %Y") %>
+        at <%= booking.start_time.strftime("%H:%M %p") %> till <%= booking.end_time.strftime("%H:%M %p") %>.</p>
+    </div>
+  <% elsif booking.status == 'approved' %>
+    <div class="card approved-card schedule-item">
+      <p class="dj-name"><%= link_to booking.dj.name, "/djs/#{booking.dj.id}" %></p>
+      <p class="booking-info">You have an upcoming show on <%= booking.date.strftime("%B %d, %Y") %>
+        at <%= booking.start_time.strftime("%H:%M %p") %> till <%= booking.end_time.strftime("%H:%M %p") %>.</p>
+    </div>
+  <% elsif booking.status == 'rejected' %>
+    <div class="card rejected-card schedule-item">
+      <p class="dj-name"><%= link_to booking.dj.name, "/djs/#{booking.dj.id}" %></p>
+      <p class="booking-info">Sorry your booking request on <%= booking.date.strftime("%B %d, %Y") %>
+        at <%= booking.start_time.strftime("%H:%M %p") %> till <%= booking.end_time.strftime("%H:%M %p") %> was rejected.</p>
+    </div>
+  <% end %>
+</div>

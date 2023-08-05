@@ -1,29 +1,54 @@
-<div class="card">
+<style>
+  /* Styles specifically for the booking_request partial */
+  .booking-request-card {
+    width: 300px;
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 5px;
+    /* Add any other styles specific to the booking_request here */
+  }
+
+  .booking-request-card .card-body {
+    display: flex;
+    justify-content: space-between;
+    /* Add any other styles specific to the card-body here */
+  }
+
+  .booking-request-card .approve-btn,
+  .booking-request-card .reject-btn {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .booking-request-card .reject-btn {
+    background-color: #f44336;
+    margin-left: 10px;
+  }
+
+  /* Separate rule to style the reject button on hover */
+  .booking-request-card .reject-btn:hover {
+    background-color: #f44336; /* Set to the original red color */
+  }
+
+  /* Style for approve button on hover */
+  .booking-request-card .approve-btn:hover {
+    background-color: #45a049;
+  }
+</style>
+
+<div class="booking-request-card">
   <div class="card-body">
-    <p>Date: <%= booking.date %></p>
-    <p>Start Time: <%= booking.start_time.strftime("%H:%M") %></p>
-    <p>End Time: <%= booking.end_time.strftime("%H:%M") %></p>
-    <p>Total Price: <%= booking.total_price %></p>
-    <p>Status: <%= booking.status %></p>
-    <%= link_to "Approve", approve_booking_path(booking), method: :post, class: "approve-btn" %>
-    <%= link_to "Reject", reject_booking_path(booking), method: :post, class: "reject-btn" %>
+    <% if booking.status == "pending"%>
+      <%= button_to "Approve", approve_booking_path(booking), method: :patch, class: "approve-btn" %>
+      <%= button_to "Reject", reject_booking_path(booking), method: :patch, class: "reject-btn" %>
+    <% end %>
   </div>
 </div>
-
-<script>
-  $(document).ready(function() {
-    $(".approve-btn, .reject-btn").click(function() {
-      // Get the button that was clicked
-      const btn = $(this);
-
-      // Send an AJAX request to update the status
-      $.post(btn.attr("href"), { _method: "post", authenticity_token: "<%= form_authenticity_token %>" }, function() {
-        // On success, hide the button
-        btn.hide();
-      });
-
-      // Prevent the default link behavior
-      return false;
-    });
-  });
-</script>

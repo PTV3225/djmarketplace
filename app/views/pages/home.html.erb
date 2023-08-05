@@ -1,3 +1,40 @@
+<style>
+  /* Add a custom class to the main container to make the video full width */
+  .video-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio (9/16 * 100) */
+    overflow: hidden; /* Ensure video stays within container */
+  }
+
+  /* Style the video to fill the container */
+  .video-container video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Overlay text styles */
+  .overlay-text {
+    position: absolute;
+    top: 0;
+    right: 0; /* Change left to right to position on the right side */
+    width: 40%; /* Adjust the width of the text container as needed */
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start; /* Align the text to the left side */
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+    padding: 20px; /* Add some padding for better readability */
+  }
+</style>
+
 <div style="background-image: url('<%= asset_path('DJmarketplace_homepage.svg') %>'); background-size: 100%; background-repeat: no-repeat; background-position: left; height: 400px; display: flex; align-items: center; padding-left: 100px; color: #37382D;">
   <div>
     <h1 class="display-2">DJ Matchr</h1>
@@ -7,8 +44,17 @@
   </div>
 </div>
 
-<div class="container mt-4">
-  <div>
+<!-- Use the video-container class to make the video full width and overlay text -->
+<div class="container mt-4 video-container">
+  <!-- Add the video here and make it loop -->
+  <video loop autoplay muted>
+    <source src="/videos/video.mp4" type="video/mp4">
+    <!-- Add additional source tags for other video formats, if necessary -->
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Overlay text on top of the video -->
+  <div class="overlay-text">
     <p class="lead">
       DJ Matchr is a cutting-edge app connecting event organisers with talented local DJs. Users can easily search for DJs based on music styles, genres, price, and location.
     </p>
@@ -20,5 +66,6 @@
     </p>
     <p class="lead">
       Trust DJ Matchr as your ultimate DJ connection app for a small gathering or a grand celebration.
+    </p>
   </div>
 </div>
