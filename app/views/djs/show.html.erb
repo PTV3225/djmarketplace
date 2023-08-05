@@ -25,11 +25,12 @@
           <%= link_to "Make a Booking", new_dj_booking_path(@dj), class: "btn btn-primary" %>
           <p></p>
           <%= link_to 'Back', djs_path, class: 'btn btn-primary' %>
-          <%= link_to 'Edit', edit_dj_path(@dj), class: 'btn btn-primary' %>
-          <%= link_to dj_path(@dj), data: {turbo_method: :delete, turbo_confirm: "Delete #{@dj.name}?"},class: 'btn btn-primary'  do %>
-            Delete
-          <% end %>
-
+          <%if @dj.user == current_user %>
+            <%= link_to 'Edit', edit_dj_path(@dj), class: 'btn btn-primary' %>
+            <%= link_to dj_path(@dj), data: {turbo_method: :delete, turbo_confirm: "Delete #{@dj.name}?"},class: 'btn btn-primary'  do %>
+              Delete
+            <% end %>
+          <%end  %>
         </div>
       </div>
     </div>

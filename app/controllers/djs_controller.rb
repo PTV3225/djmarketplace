@@ -1,6 +1,7 @@
 class DjsController < ApplicationController
 
   skip_before_action :authenticate_user!, only: :index
+  before_action :authorize_dj_owner, only: [:edit, :update, :destroy]
 
     # PG SEARCH implementation
     # if params[:query].present?
@@ -76,19 +77,33 @@ class DjsController < ApplicationController
     end
   end
 
-   def destroy
+  def destroy
     @dj = Dj.find(params[:id])
+
+    unless @dj.user == current_user
+      flash[:alert] = "You are not allowed to delete this DJ. For more information, contact admin@admin.nz"
+      redirect_to @dj
+    end
+
     if @dj.destroy
       redirect_to djs_path, notice: "DJ Listing deleted successfully."
     else
-      redirect_to dj_path(@dj), alert: "Failed to delete DJ Listing."
+      flash[:alert] = "Failed to delete DJ Listing."
+      redirect_to @dj
     end
   end
-
 
   private
 
   def dj_params
     params.require(:dj).permit(:name, :genre_id, :rate, :description, :photo, :link)
+  end
+
+  def authorize_dj_owner
+    @dj = Dj.find(params[:id])
+    unless @dj.user == current_user
+      flash[:alert] = "You are not allowed to edit this DJ. For more information, contact admin@admin.nz"
+      redirect_to @dj
+    end
   end
 end
