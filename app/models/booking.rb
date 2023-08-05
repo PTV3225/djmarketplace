@@ -1,6 +1,7 @@
 class Booking < ApplicationRecord
   belongs_to :dj
   belongs_to :user
+  has_one :review
 
   validates :start_time, :end_time, :date, presence: true
   validates :total_price, presence: true, numericality: { greater_than_or_equal_to: 0 }

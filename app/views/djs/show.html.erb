@@ -3,7 +3,7 @@
     <div class="row g-0">
       <div class="col-md-4">
         <% if @dj.photo.attached? %>
-          <%= image_tag @dj.photo, class: 'dj-photo' %>
+          <%= image_tag @dj.photo, class: 'img-fluid dj-photo' %>
         <% else %>
           <p>No photo available.</p>
         <% end %>
@@ -16,21 +16,38 @@
           <p><strong>Location:</strong> <%= @dj.location %></p>
           <p><%= @dj.description %></p>
           <% if @dj.link.present? %>
-            <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
-                    src="https://w.soundcloud.com/player/?url=<%= @dj.link %>&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;show_teaser=true">
-            </iframe>
+            <div class="soundcloud-embed">
+              <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
+                      src="https://w.soundcloud.com/player/?url=<%= @dj.link %>&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;show_teaser=true">
+              </iframe>
+            </div>
           <% else %>
             <p>No SoundCloud track available.</p>
           <% end %>
-          <%= link_to "Make a Booking", new_dj_booking_path(@dj), class: "btn btn-primary" %>
+
+          <h2>Reviews</h2>
+          <% if @reviews.any? %>
+            <ul class="list-unstyled">
+              <% @reviews.each do |review| %>
+                <li>
+                  <strong>Rating:</strong> <%= review.rating %><br>
+                  <%= review.comment %>
+                </li>
+              <% end %>
+            </ul>
+          <% else %>
+            <p>No reviews for this DJ yet.</p>
+          <% end %>
+
+          <%= link_to "Make a Booking", new_dj_booking_path(@dj), class: "btn btn-primary mt-3" %>
           <p></p>
-          <%= link_to 'Back', djs_path, class: 'btn btn-primary' %>
-          <%if @dj.user == current_user %>
-            <%= link_to 'Edit', edit_dj_path(@dj), class: 'btn btn-primary' %>
-            <%= link_to dj_path(@dj), data: {turbo_method: :delete, turbo_confirm: "Delete #{@dj.name}?"},class: 'btn btn-primary'  do %>
+          <%= link_to 'Back', djs_path, class: 'btn btn-secondary' %>
+          <% if @dj.user == current_user %>
+            <%= link_to 'Edit', edit_dj_path(@dj), class: 'btn btn-warning' %>
+            <%= link_to dj_path(@dj), data: { turbo_method: :delete, turbo_confirm: "Delete #{@dj.name}?" }, class: 'btn btn-danger' do %>
               Delete
             <% end %>
-          <%end  %>
+          <% end %>
         </div>
       </div>
     </div>

@@ -50,6 +50,7 @@ class DjsController < ApplicationController
 
   def show
     @dj = Dj.find(params[:id])
+    @reviews = @dj.reviews
   end
 
   def create
