@@ -51,7 +51,31 @@
     justify-content: space-between;
   }
 
+  /* Style for buttons inside schedule items */
+  .approve-btn,
+  .reject-btn {
+    padding: 5px 10px;
+    background-color: #007bff; /* Blue color, you can change it to your preferred color */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .reject-btn {
+    background-color: #007bff; /* Blue color, you can change it to your preferred color */
+    margin-left: 10px;
+  }
+
+  /* Style for buttons on hover */
+  .approve-btn:hover,
+  .reject-btn:hover {
+    opacity: 0.8;
+  }
+
 </style>
+
+<!-- The rest of your HTML remains unchanged -->
 
 <div class="schedule-container">
   <% if booking.status == "pending" %>

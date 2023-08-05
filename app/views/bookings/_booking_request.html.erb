@@ -1,5 +1,4 @@
 <style>
-<style>
   /* Styles specifically for the booking_request partial */
   .booking-request-card {
     width: 300px;
@@ -34,8 +33,13 @@
     margin-left: 10px;
   }
 
-  .booking-request-card .approve-btn:hover,
+  /* Separate rule to style the reject button on hover */
   .booking-request-card .reject-btn:hover {
+    background-color: #f44336; /* Set to the original red color */
+  }
+
+  /* Style for approve button on hover */
+  .booking-request-card .approve-btn:hover {
     background-color: #45a049;
   }
 </style>
