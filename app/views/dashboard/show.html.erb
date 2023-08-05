@@ -6,12 +6,12 @@
   }
 
   .dj-container {
-    flex-basis: 50%;
+    flex-basis: 60%; /* Change from 50% to 100% to take the full width */
     padding: 10px;
   }
 
   .user-bookings {
-    flex-basis: 50%;
+    flex-basis: 40%; /* Set to 100% to take the full width */
     padding: 10px;
   }
 
@@ -24,46 +24,53 @@
 
 <div class="container">
   <div class="dj-container">
-  <h2>Your DJs for Rent</h2>
-  <% @djs.each do |dj| %>
-    <div class="card">
-      <div class="card-body">
-        <h3><%= dj.name %></h3>
-        <p>Genre: <%= dj.genre.category %></p>
-        <p>Rate (per hour): <%= "$#{dj.rate}" %></p>
-        <p>Description: <%= dj.description %></p>
-        <p>Location: <%= dj.location %></p>
-        <% if dj.link.present? %>
-          <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
-                  src="https://w.soundcloud.com/player/?url=<%= dj.link %>&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;show_teaser=true">
-          </iframe>
+    <h2>Your DJs for Rent</h2>
+    <% @djs.each do |dj| %>
+      <div class="card">
+        <div class="card-body">
+          <h3><%= dj.name %></h3>
+          <p>Genre: <%= dj.genre.category %></p>
+          <p>Rate (per hour): <%= "$#{dj.rate}" %></p>
+          <p>Description: <%= dj.description %></p>
+          <p>Location: <%= dj.location %></p>
+
+          <% if dj.link.present? %>
+            <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
+                    src="https://w.soundcloud.com/player/?url=<%= dj.link %>&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;show_teaser=true">
+            </iframe>
+          <% else %>
+            <p>No SoundCloud track available.</p>
+          <% end %>
+        </div>
+
+        <% dj_incoming_bookings = @incoming_bookings.select { |booking| booking.dj_id == dj.id } %>
+        <% if dj_incoming_bookings.present? %>
+          <h4>Incoming Bookings for <%= dj.name %>:</h4>
+          <!-- Display bookings made to the DJ -->
+          <% dj_incoming_bookings.each do |booking| %>
+
+            <div class="card">
+              <% if booking.status == 'pending' %>
+                <p><%= booking.user.first_name %> <%= booking.user.last_name %> wants to book <%= dj.name %> for <%= number_to_currency(booking.total_price) %> on <%= booking.date.strftime('%Y-%m-%d') %> at <%= booking.start_time.strftime('%H:%M') %> until <%= booking.end_time.strftime('%H:%M') %></p>
+              <% elsif booking.status == 'approved' %>
+                <p><%= booking.user.first_name %> <%= booking.user.last_name %> has booked <%= dj.name %> for <%= number_to_currency(booking.total_price) %> on <%= booking.date.strftime('%Y-%m-%d') %> at <%= booking.start_time.strftime('%H:%M') %> until <%= booking.end_time.strftime('%H:%M') %></p>
+              <% elsif booking.status == 'rejected' %>
+                <p>You have rejected <%= booking.user.first_name %> <%= booking.user.last_name %>'s request to book <%= dj.name %> for <%= number_to_currency(booking.total_price) %> on <%= booking.date.strftime('%Y-%m-%d') %> at <%= booking.start_time.strftime('%H:%M') %> until <%= booking.end_time.strftime('%H:%M') %></p>
+              <% end %>
+              <%= render "bookings/booking_request", booking: booking %>
+            </div>
+          <% end %>
         <% else %>
-          <p>No SoundCloud track available.</p>
+          <p>No incoming bookings for this DJ.</p>
         <% end %>
+
       </div>
+    <% end %>
 
-  <% dj_incoming_bookings = @incoming_bookings.select { |booking| booking.dj_id == dj.id } %>
-<% if dj_incoming_bookings.present? %>
-  <h4>Incoming Bookings for <%= dj.name %>:</h4>
-  <!-- Display bookings made to the DJ -->
-  <% dj_incoming_bookings.each do |booking| %>
-    <div class="card">
-      <p><%= booking.user.first_name %> <%= booking.user.last_name %> wants to book <%= dj.name %> for <%= number_to_currency(booking.total_price) %> on <%= booking.date.strftime('%Y-%m-%d') %> at <%= booking.start_time.strftime('%H:%M') %> until <%= booking.end_time.strftime('%H:%M') %></p>
-      <%= render "bookings/booking_request", booking: booking %>
-    </div>
-  <% end %>
-<% else %>
-  <p>No incoming bookings for this DJ.</p>
-<% end %>
-
-    </div>
-  <% end %>
-
-  <% if @djs.empty? %>
-    <p>No DJs associated with the user.</p>
-  <% end %>
-</div>
-
+    <% if @djs.empty? %>
+      <p>No DJs associated with the user.</p>
+    <% end %>
+  </div>
 
   <div class="user-bookings">
     <h2>Your Bookings:</h2>
