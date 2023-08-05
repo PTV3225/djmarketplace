@@ -1,0 +1,3 @@
+<!-- Display booking details -->
+<p>You have requested <%= booking.dj.name %> on <%= booking.date.strftime("%B %d, %Y") %>
+at <%= booking.start_time.strftime("%H:%M %p") %> till <%= booking.end_time.strftime("%H:%M %p") %>.</p>

@@ -4,18 +4,23 @@
       <h3 class="mb-4">Make a Booking for <%= @dj.name %></h3>
       <%= simple_form_for [@dj, @booking], html: { id: "booking-form" } do |f| %>
         <%= f.hidden_field :dj_id, value: @dj.id %>
+        <%= f.hidden_field :status, value: "pending" %>
+<div class="mb-3">
+          <%= f.label :date, class: "form-label" %>
+          <%= f.date_field :date, class: "form-control date-input" %>
+        </div>
+
         <div class="mb-3">
           <%= f.label :start_time, class: "form-label" %>
-          <%= f.datetime_local_field :start_time, class: "form-control start-time-input" %>
+          <%= f.time_field :start_time, class: "form-control start-time-input" %>
         </div>
 
         <div class="mb-3">
           <%= f.label :end_time, class: "form-label" %>
-          <%= f.datetime_local_field :end_time, class: "form-control end-time-input" %>
+          <%= f.time_field :end_time, class: "form-control end-time-input" %>
         </div>
-
         <div class="mb-3">
-          <%= f.input :total_price, placeholder: "Enter the total price", input_html: { readonly: true }, wrapper_html: { class: "total-price-wrapper" }, label: false %>
+          <%= f.input :total_price, placeholder: "cost for hours", input_html: { readonly: true }, wrapper_html: { class: "total-price-wrapper" }, label: false, id: "booking_total_price" %>
         </div>
 
         <%= f.submit "Book Now", class: "btn btn-primary" %>
@@ -25,32 +30,34 @@
 </div>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
+  document.addEventListener("DOMContentLoaded", function () {
     const startTimeInput = document.querySelector(".start-time-input");
     const endTimeInput = document.querySelector(".end-time-input");
-    const totalPriceInput = document.querySelector("#booking_total_price");
+    const totalPriceField = document.querySelector("#booking_total_price");
 
-    // Function to calculate the duration in hours between start and end times
-    function calculateDurationInHours(start, end) {
-      const durationInMillis = new Date(end) - new Date(start);
-      return durationInMillis / (1000 * 60 * 60);
-    }
-
-    // Function to update the total price based on the rate and duration
-    function updateTotalPrice() {
-      const startTime = startTimeInput.value;
-      const endTime = endTimeInput.value;
-      const durationInHours = calculateDurationInHours(startTime, endTime);
-      const ratePerHour = <%= @dj.rate %>;
-      const totalPrice = (durationInHours * ratePerHour).toFixed(2);
-      totalPriceInput.value = totalPrice;
-    }
-
-    // Update the total price when start or end time inputs change
     startTimeInput.addEventListener("change", updateTotalPrice);
     endTimeInput.addEventListener("change", updateTotalPrice);
 
-    // Initial update of total price
-    updateTotalPrice();
+    function getTimeInMilliseconds(timeInput) {
+      const timeParts = timeInput.split(":");
+      const hours = parseInt(timeParts[0], 10);
+      const minutes = parseInt(timeParts[1], 10);
+      return hours * 3600000 + minutes * 60000; // 1 hour = 3600000 ms, 1 minute = 60000 ms
+    }
+
+    function updateTotalPrice() {
+      const startTime = getTimeInMilliseconds(startTimeInput.value);
+      const endTime = getTimeInMilliseconds(endTimeInput.value);
+      const durationInMillis = endTime - startTime;
+      const durationInHours = durationInMillis / 3600000; // Convert back to hours
+      const ratePerHour = <%= @dj.rate %>; // Replace this with the actual rate of the DJ
+      const totalPrice = (durationInHours * ratePerHour).toFixed(2);
+
+      if (isNaN(totalPrice)) {
+        totalPriceField.value = "";
+      } else {
+        totalPriceField.value = totalPrice;
+      }
+    }
   });
 </script>

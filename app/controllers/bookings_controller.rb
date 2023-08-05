@@ -15,16 +15,34 @@ class BookingsController < ApplicationController
   end
 
   def create
-    @booking = Booking.new(booking_params)
+
     @dj = Dj.find(params[:dj_id])
+    @booking = Booking.new(booking_params)
     @booking.dj = @dj
+    @booking.user = current_user
+    @booking.status = :pending
+
 
     if @booking.save
-      redirect_to @booking, notice: "Booking was successfully created."
+   # Send email or notification to DJ's dashboard notifying about new booking request
+      redirect_to dashboard_path, notice: "Booking request sent successfully."
     else
-      render :new, status: :unprocessable_entity
+      render "djs/show" # or redirect back with an error message
     end
   end
+
+  def approve
+    @booking = Booking.find(params[:id])
+    @booking.update(status: "approved")
+    redirect_to dashboard_path, notice: "Booking approved successfully."
+  end
+
+  def reject
+    @booking = Booking.find(params[:id])
+    @booking.update(status: "rejected")
+    redirect_to dashboard_path, notice: "Booking rejected successfully."
+  end
+
 
   def edit
     @booking = Booking.find(params[:id])
@@ -50,29 +68,8 @@ class BookingsController < ApplicationController
     end
   end
 
-
-
-
-  def approve
-    booking = Booking.find(params[:id])
-    # Update the booking status to approved
-    booking.update(status: 'approved')
-    # Redirect back to the dashboard or show a success message
-    redirect_to dashboard_path, notice: 'Booking approved successfully.'
-  end
-
-  def reject
-    booking = Booking.find(params[:id])
-    # Update the booking status to rejected
-    booking.update(status: 'rejected')
-    # Redirect back to the dashboard or show a success message
-    redirect_to dashboard_path, notice: 'Booking rejected successfully.'
-  end
-
-
-
   private
   def booking_params
-    params.require(:booking).permit(:dj_id, :user_id, :start_time, :end_time, :date)
+    params.require(:booking).permit(:dj_id, :user_id, :start_time, :end_time, :date, :status, :total_price)
   end
 end
