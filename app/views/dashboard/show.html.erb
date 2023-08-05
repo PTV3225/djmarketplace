@@ -28,6 +28,7 @@
     <% @djs.each do |dj| %>
       <div class="card">
         <div class="card-body">
+
           <h3><%= link_to dj.name, dj_path(dj) %></h3>
           <p>Genre: <%= dj.genre.category %></p>
           <p>Rate (per hour): <%= "$#{dj.rate}" %></p>
@@ -57,7 +58,7 @@
       <% else %>
         <p>No incoming bookings for this DJ.</p>
       <% end %>
-    <% end %>
+
 
     <% if @djs.empty? %>
       <p>No DJs associated with the user.</p>
@@ -65,7 +66,7 @@
   </div>
 
   <div class="user-bookings">
-    <h2>Your Bookings:</h2>
+    <h2>Your Bookings</h2>
     <% user_bookings = @outgoing_bookings.select { |booking| booking.user_id == current_user.id } %>
     <% if user_bookings.present? %>
       <!-- Display bookings made by the current_user -->

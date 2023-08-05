@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   # Add the DJ controller routes excluding the index action
   resources :djs do
     resources :bookings, only: [:new, :create]
+    resources :reviews, except: [:index, :show]
   end
 
   # Define the route for the dashboard
