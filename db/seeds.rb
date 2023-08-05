@@ -198,31 +198,30 @@ melbourne_suburbs = [
   )
 end
 
-# Create bookings
-25.times do
-  start_time = DateTime.now + rand(1..30).days
-  end_time = start_time + rand(1..5).hours
-  if end_time <= start_time
-    end_time = start_time + rand(1..5).hours
-  end
-  date = start_time.to_date
-  dj = Dj.all.sample
+# # Create bookings
+# 25.times do
+#   start_time = DateTime.now + rand(1..30).days
+#   end_time = start_time + rand(1..5).hours
+#   if end_time <= start_time
+#     end_time = start_time + rand(1..5).hours
+#   end
+#   date = start_time.to_date
+#   dj = Dj.all.sample
 
-  # Calculate total_price based on the rate of the DJ and the duration of the booking
-  hours_duration = (end_time.to_time - start_time.to_time)/ 1.hours
-  # / 1.hour
+#   # Calculate total_price based on the rate of the DJ and the duration of the booking
+#   hours_duration = (end_time.to_time - start_time.to_time)/ 1.hours
+#   # / 1.hour
 
 
 
-  total_price = dj.rate * hours_duration
-puts total_price
+#   total_price = dj.rate * hours_duration
 
-  Booking.create!(
-    start_time: start_time,
-    end_time: end_time,
-    date: date,
-    total_price: total_price,
-    dj_id: dj.id,
-    user_id: User.all.sample.id
-  )
-end
+#   Booking.create!(
+#     start_time: start_time,
+#     end_time: end_time,
+#     date: date,
+#     total_price: total_price,
+#     dj_id: dj.id,
+#     user_id: User.all.sample.id
+#   )
+# end

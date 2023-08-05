@@ -43,9 +43,6 @@ class DjsController < ApplicationController
     end
   end
 
-
-
-
   def new
     @dj = Dj.new
   end
@@ -78,7 +75,7 @@ class DjsController < ApplicationController
       render :edit, status: :unprocessable_entity
     end
   end
-  
+
    def destroy
     @dj = Dj.find(params[:id])
     if @dj.destroy
@@ -86,12 +83,12 @@ class DjsController < ApplicationController
     else
       redirect_to dj_path(@dj), alert: "Failed to delete DJ Listing."
     end
-  end 
-end
+  end
 
-private
 
- def dj_params
+  private
+
+  def dj_params
     params.require(:dj).permit(:name, :genre_id, :rate, :description, :photo, :link)
   end
 end
